@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Уборка между гостями — как это работает</title>
+<style>
+  :root{
+    color-scheme: light;
+    --ink:#16181d; --muted:#6b7280; --line:#e5e7eb; --bg:#f5f6f8; --card:#fff;
+    --accent:#1f6feb; --accent-bg:#eaf1fe; --ok:#0e8a55; --ok-bg:#e8f7f0;
+    --warn:#b45309; --warn-bg:#fdf3e3;
+  }
+  *{box-sizing:border-box}
+  .ah{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink); background:var(--bg); max-width:430px; margin:0 auto;
+      padding:14px; min-height:520px; -webkit-font-smoothing:antialiased}
+  .ah *{font-family:inherit}
+  .scr{display:none} .scr.on{display:block}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px;
+        padding:14px; margin-bottom:10px}
+  .h1{font-size:23px; font-weight:800; letter-spacing:-.4px; margin:6px 0 4px}
+  .h2{font-size:16px; font-weight:700; margin:0 0 8px}
+  .mut{color:var(--muted); font-size:13.5px; line-height:1.45}
+  .big{font-size:28px; font-weight:900; letter-spacing:-.6px}
+  .row{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .pill{display:inline-block; border-radius:999px; padding:4px 10px; font-size:11.5px; font-weight:700}
+  .pill.ok{background:var(--ok-bg); color:var(--ok)}
+  .pill.warn{background:var(--warn-bg); color:var(--warn)}
+  .pill.info{background:var(--accent-bg); color:var(--accent)}
+  .btn{display:block; width:100%; border:0; border-radius:999px; padding:13px;
+       font-size:15px; font-weight:800; cursor:pointer; margin-top:8px}
+  .btn.p{background:var(--accent); color:#fff}
+  .btn.g{background:var(--ok); color:#fff}
+  .btn.o{background:#fff; color:var(--ink); border:1px solid var(--line)}
+  .bar{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px}
+  .back{background:none;border:0;color:var(--accent);font-size:14px;font-weight:600;cursor:pointer;padding:4px 0}
+  .step{color:var(--muted); font-size:12px}
+  .li{display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-top:1px solid var(--line)}
+  .li:first-of-type{border-top:0}
+  .box{width:21px;height:21px;border-radius:6px;border:2px solid var(--line);flex:none;
+       display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:900}
+  .box.done{background:var(--ok);border-color:var(--ok)}
+  .ph{background:var(--accent); color:#fff; border:0; border-radius:999px; padding:5px 11px;
+      font-size:11.5px; font-weight:700; cursor:pointer; flex:none}
+  .ph.done{background:var(--ok-bg); color:var(--ok)}
+  .inp{width:100%; border:1px solid var(--line); border-radius:10px; padding:11px 12px;
+       font-size:19px; font-weight:800; margin-top:8px; color:var(--ink)}
+  .badge{display:inline-block;background:var(--ok-bg);color:var(--ok);border-radius:999px;
+         padding:3px 8px;font-size:10.5px;font-weight:700;margin:4px 4px 0 0}
+  .note{background:var(--accent-bg); border:1px solid #c7dbfd; border-radius:12px; padding:11px; font-size:13px}
+  .fin{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+  body{margin:0; background:var(--bg)}
+</style>
+</head>
+<body>
+
+<div class="ah">
+
+  <!-- ВЫБОР РОЛИ -->
+  <div class="scr on" id="s-start">
+    <div class="h1">Уборка между гостями</div>
+    <p class="mut">Сервис для посуточной аренды в Калининграде: собственник не ищет
+      горничную сам, а горничная не бегает за деньгами.<br><br>
+      Посмотрите за минуту, как это устроено. Нажимайте — всё кликается.</p>
+    <div style="height:8px"></div>
+    <button class="btn p" onclick="go('c1')">Я горничная</button>
+    <button class="btn o" onclick="go('h1')">Я сдаю квартиру посуточно</button>
+    <p class="mut" style="margin-top:14px">Это демонстрация концепта на выдуманных
+      данных. Ничего не нужно устанавливать и нигде не надо регистрироваться.</p>
+  </div>
+
+  <!-- ГОРНИЧНАЯ 1: ЛЕНТА -->
+  <div class="scr" id="s-c1">
+    <div class="bar"><button class="back" onclick="go('start')">‹ Назад</button><span class="step">1 из 4</span></div>
+    <div class="row"><div class="h1">Заказы рядом</div><span class="pill info">Калининград</span></div>
+    <div class="card">
+      <div class="row"><div><div class="big">1 800 ₽</div>
+        <div class="mut">ваша ставка · ориентир хозяина 1 500 ₽</div></div>
+        <span class="pill ok">✓ оплата гарантирована</span></div>
+      <div style="margin-top:10px"><b>Студия в Рыбной деревне</b>
+        <div class="mut">Центральный · завтра, 12:00</div></div>
+      <button class="btn p" onclick="go('c2')">Открыть заказ</button>
+    </div>
+    <div class="card">
+      <div class="row"><div><div class="big">1 800 ₽</div>
+        <div class="mut">2-комнатная · Ленинградский</div></div>
+        <span class="pill ok">✓ гарантия</span></div>
+      <div class="mut" style="margin-top:8px">Суббота, 11:00</div>
+    </div>
+    <p class="mut">Адрес, время и сумма видны до того, как вы согласились.
+      Берёте только удобные заказы, отказ ничем не грозит.</p>
+  </div>
+
+  <!-- ГОРНИЧНАЯ 2: СВОЯ ЦЕНА -->
+  <div class="scr" id="s-c2">
+    <div class="bar"><button class="back" onclick="go('c1')">‹ Заказы</button><span class="step">2 из 4</span></div>
+    <div class="card">
+      <b>Студия в Рыбной деревне</b>
+      <div class="mut">Калининград, Октябрьская ул. 8 · завтра в 12:00</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--line)">
+        <span class="mut">Ориентир хозяина</span><b>1 500 ₽</b></div>
+    </div>
+    <div class="card">
+      <div class="h2">Вашу цену называете вы</div>
+      <p class="mut">Хозяин не диктует ставку. Вы предлагаете свою, он выбирает
+        из откликов — по цене и по отзывам.</p>
+      <input class="inp" id="bid" value="1800" inputmode="numeric">
+      <button class="btn p" onclick="go('c3')">Откликнуться</button>
+    </div>
+  </div>
+
+  <!-- ГОРНИЧНАЯ 3: ЧЕК-ЛИСТ -->
+  <div class="scr" id="s-c3">
+    <div class="bar"><button class="back" onclick="go('c2')">‹ Назад</button><span class="step">3 из 4</span></div>
+    <div class="note">✓ Отклик отправлен. Хозяин выбрал вас — заказ ваш за 1 800 ₽.</div>
+    <div class="card" style="margin-top:10px">
+      <div class="h2">Чек-лист уборки</div>
+      <p class="mut">Пункты с камерой нужно подтвердить фото. Это ваша защита:
+        потом никто не скажет, что убрано плохо.</p>
+      <div style="margin-top:8px">
+        <div class="li"><span class="box done">✓</span><span style="flex:1">Свежее бельё заправлено</span>
+          <button class="ph done">✓ фото</button></div>
+        <div class="li"><span class="box" id="b2"></span><span style="flex:1">Санузел: сантехника, зеркала</span>
+          <button class="ph" id="p2" onclick="shoot()">Снять</button></div>
+        <div class="li"><span class="box done">✓</span><span style="flex:1">Кухня и полы</span></div>
+      </div>
+      <button class="btn g" id="submit" onclick="go('c4')" disabled style="opacity:.45">Сдать на проверку</button>
+    </div>
+  </div>
+
+  <!-- ГОРНИЧНАЯ 4: ДЕНЬГИ -->
+  <div class="scr" id="s-c4">
+    <div class="bar"><button class="back" onclick="go('c3')">‹ Назад</button><span class="step">4 из 4</span></div>
+    <div class="card" style="background:var(--ok-bg);border-color:var(--ok)">
+      <b style="color:var(--ok)">Оплата защищена</b>
+      <p class="mut" style="margin:6px 0 0">Хозяин внёс деньги до начала уборки — они
+        заморожены. Если он не ответит, уборка примется автоматически через 24 часа
+        и деньги всё равно придут вам.</p>
+    </div>
+    <div class="card">
+      <div class="mut">В резерве</div><div class="big">1 800 ₽</div>
+      <div class="mut">Придут в день приёмки. Комиссия сервиса — 0 ₽.</div>
+    </div>
+    <div class="card">
+      <b>Приведи подругу — 500 ₽</b>
+      <p class="mut" style="margin:6px 0 0">Бонус после её третьей уборки.</p>
+    </div>
+    <button class="btn p" onclick="go('fin')">Дальше</button>
+  </div>
+
+  <!-- ХОСТ 1: ВЫЕЗД -->
+  <div class="scr" id="s-h1">
+    <div class="bar"><button class="back" onclick="go('start')">‹ Назад</button><span class="step">1 из 3</span></div>
+    <div class="h1">Студия в Рыбной деревне</div>
+    <div class="card">
+      <span class="pill warn">Гость выезжает завтра в 12:00</span>
+      <p class="mut" style="margin:10px 0 0">Уборка создана автоматически из вашего
+        календаря на Авито. Вы ничего не делали.</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="mut">Ориентир оплаты</span><b>1 500 ₽</b></div>
+      <div class="row" style="margin-top:6px"><span class="mut">Статус</span><span class="pill info">2 отклика</span></div>
+      <button class="btn p" onclick="go('h2')">Посмотреть отклики</button>
+    </div>
+  </div>
+
+  <!-- ХОСТ 2: ОТКЛИКИ -->
+  <div class="scr" id="s-h2">
+    <div class="bar"><button class="back" onclick="go('h1')">‹ Объект</button><span class="step">2 из 3</span></div>
+    <div class="h2">Кто готов убрать</div>
+    <div class="card">
+      <div class="row"><b>Марина В.</b><span class="big" style="font-size:20px">1 800 ₽</span></div>
+      <div class="mut">★ 4.9 · 214 уборок · 40 % зовут повторно</div>
+      <div><span class="badge">Проверена</span><span class="badge">Профи</span><span class="badge">Быстрый отклик</span></div>
+      <button class="btn p" onclick="go('h3')">Выбрать Марину</button>
+    </div>
+    <div class="card">
+      <div class="row"><b>Светлана К.</b><span class="big" style="font-size:20px">1 600 ₽</span></div>
+      <div class="mut">★ 4.7 · 89 уборок</div>
+      <div><span class="badge">Проверена</span></div>
+      <button class="btn o" onclick="go('h3')">Выбрать Светлану</button>
+    </div>
+    <p class="mut">Цену называет исполнитель, вы выбираете по связке «цена и репутация».
+      Деньги замораживаются сразу — поэтому к вам идут лучшие.</p>
+  </div>
+
+  <!-- ХОСТ 3: ПРИЁМКА -->
+  <div class="scr" id="s-h3">
+    <div class="bar"><button class="back" onclick="go('h2')">‹ Отклики</button><span class="step">3 из 3</span></div>
+    <div class="note">Марина убрала и сдала работу. Пришёл фото-отчёт.</div>
+    <div class="card" style="margin-top:10px">
+      <div class="h2">Отчёт</div>
+      <div class="li"><span class="box done">✓</span><span style="flex:1">Бельё заправлено</span><span class="pill ok">фото</span></div>
+      <div class="li"><span class="box done">✓</span><span style="flex:1">Санузел</span><span class="pill ok">фото</span></div>
+      <div class="li"><span class="box done">✓</span><span style="flex:1">Кухня и полы</span></div>
+      <p class="mut" style="margin-top:10px">⚠ Заканчивается: туалетная бумага, мыло.<br>
+        ⚠ Течёт смеситель в ванной.</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="mut">К выплате</span><b>1 800 ₽</b></div>
+      <button class="btn g" onclick="go('fin')">Принять и выплатить</button>
+      <p class="mut" style="margin-top:8px">Квартира готова к следующему гостю.
+        Вы не звонили никому.</p>
+    </div>
+  </div>
+
+  <!-- ФИНАЛ -->
+  <div class="scr" id="s-fin">
+    <div class="fin">
+      <div class="h1" style="margin-top:0">Вот и всё</div>
+      <p class="mut">Собственник не ищет горничную и не проверяет уборку вручную.
+        Горничная сама ставит цену и не рискует остаться без денег.</p>
+      <p class="mut"><b>Это концепт — сервис в разработке.</b> Я запускаю его в
+        Калининграде и сейчас разговариваю с теми, кто будет им пользоваться.</p>
+      <p class="mut">Напишите мне в ответ: что здесь удобно, чего не хватает
+        и стали бы вы этим пользоваться?</p>
+      <button class="btn o" onclick="go('start')">Посмотреть ещё раз</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function go(id){
+    document.querySelectorAll('.ah .scr').forEach(function(s){ s.classList.remove('on'); });
+    var el = document.getElementById('s-' + id);
+    if (el) el.classList.add('on');
+    window.scrollTo(0, 0);
+  }
+  function shoot(){
+    document.getElementById('b2').classList.add('done');
+    document.getElementById('b2').textContent = '✓';
+    var p = document.getElementById('p2');
+    p.classList.add('done'); p.textContent = '✓ фото';
+    var s = document.getElementById('submit');
+    s.disabled = false; s.style.opacity = 1;
+  }
+</script>
+</body>
+</html>
