@@ -4,170 +4,300 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Уборка между гостями — Калининград</title>
-<meta name="description" content="Сервис уборок для посуточной аренды в Калининграде: горничная находится сама, оплата гарантирована, фото-отчёт после каждой уборки.">
+<meta name="description" content="Сервис уборок для посуточной аренды в Калининграде: горничная находится сама, оплата гарантирована, фото-отчёт до заезда гостя.">
 <style>
   :root{
     color-scheme: light;
-    --ink:#14161a; --muted:#5f6672; --line:#e6e8ec; --bg:#ffffff; --soft:#f5f7fa;
-    --accent:#1f6feb; --accent-soft:#eaf1fe; --ok:#0e8a55; --ok-soft:#e8f7f0;
+    --ink:#0f172a; --ink2:#334155; --muted:#64748b; --line:#e2e8f0;
+    --bg:#ffffff; --soft:#f8fafc; --dark:#0f172a;
+    --accent:#2563eb; --accent-d:#1d4ed8; --accent-soft:#eff6ff;
+    --ok:#059669; --ok-soft:#ecfdf5;
+    --radius:16px;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{margin:0; background:var(--bg); color:var(--ink);
-       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-       -webkit-font-smoothing:antialiased; line-height:1.5}
-  .wrap{max-width:760px; margin:0 auto; padding:0 20px}
-  section{padding:44px 0; border-bottom:1px solid var(--line)}
-  section:last-of-type{border-bottom:0}
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+       -webkit-font-smoothing:antialiased; line-height:1.55}
+  a{color:inherit}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px; width:100%}
 
-  .hero{padding:56px 0 40px}
-  .kicker{display:inline-block; background:var(--accent-soft); color:var(--accent);
-          font-size:13px; font-weight:700; padding:6px 12px; border-radius:999px; margin-bottom:18px}
-  h1{font-size:40px; line-height:1.1; letter-spacing:-1px; margin:0 0 16px; font-weight:800}
-  .lead{font-size:18px; color:var(--muted); margin:0 0 26px; max-width:620px}
-  h2{font-size:25px; letter-spacing:-.5px; margin:0 0 6px; font-weight:800}
-  .sub{color:var(--muted); margin:0 0 22px}
-  h3{font-size:17px; margin:0 0 6px; font-weight:700}
-  p{margin:0 0 14px}
+  /* ── Шапка ── */
+  header{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.88);
+         backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+  .nav{display:flex; align-items:center; justify-content:space-between; height:66px; gap:16px}
+  .logo{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:-.3px; font-size:16px}
+  .logo i{width:30px; height:30px; border-radius:9px; background:var(--accent); display:block; position:relative; flex:none}
+  .logo i:after{content:"✓"; position:absolute; inset:0; color:#fff; font-size:16px; font-weight:900;
+                display:flex; align-items:center; justify-content:center; font-style:normal}
+  .nav-links{display:none; gap:26px; font-size:14.5px; color:var(--ink2); text-decoration:none}
+  .nav-links a{text-decoration:none}
+  .nav-links a:hover{color:var(--accent)}
+  @media (min-width:860px){ .nav-links{display:flex} }
 
-  .btns{display:flex; flex-wrap:wrap; gap:10px}
-  .btn{display:inline-block; text-decoration:none; border-radius:999px;
-       padding:14px 24px; font-size:15.5px; font-weight:700; border:1px solid transparent}
+  /* ── Кнопки ── */
+  .btn{display:inline-flex; align-items:center; justify-content:center; text-decoration:none;
+       border-radius:999px; padding:13px 26px; font-size:15px; font-weight:700;
+       border:1.5px solid transparent; transition:.15s; white-space:nowrap; cursor:pointer}
   .btn.p{background:var(--accent); color:#fff}
+  .btn.p:hover{background:var(--accent-d)}
   .btn.o{background:#fff; color:var(--ink); border-color:var(--line)}
-  .btn.g{background:var(--ok); color:#fff}
+  .btn.o:hover{border-color:var(--muted)}
+  .btn.w{background:#fff; color:var(--ink)}
+  .btn.sm{padding:9px 18px; font-size:14px}
+  .btns{display:flex; flex-wrap:wrap; gap:12px}
 
-  .cards{display:grid; gap:14px; grid-template-columns:1fr}
-  @media (min-width:700px){ .cards{grid-template-columns:1fr 1fr 1fr} }
-  .card{background:var(--soft); border-radius:14px; padding:18px}
+  /* ── Секции ── */
+  section{padding:76px 0}
+  .soft{background:var(--soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .eyebrow{display:inline-block; background:var(--accent-soft); color:var(--accent);
+           font-size:13px; font-weight:700; padding:7px 14px; border-radius:999px; margin-bottom:20px}
+  h1{font-size:clamp(32px,4.4vw,52px); line-height:1.07; letter-spacing:-1.6px; margin:0 0 20px; font-weight:800}
+  h2{font-size:clamp(26px,3vw,36px); line-height:1.15; letter-spacing:-1px; margin:0 0 12px; font-weight:800}
+  h3{font-size:17.5px; margin:0 0 8px; font-weight:750}
+  .lead{font-size:19px; color:var(--ink2); margin:0 0 30px; max-width:540px}
+  .sub{font-size:17px; color:var(--muted); margin:0 auto 38px; max-width:620px}
+  .center{text-align:center}
+
+  /* ── Hero ── */
+  .hero{padding:72px 0 84px}
+  .hero-grid{display:grid; gap:48px; align-items:center; grid-template-columns:1fr}
+  @media (min-width:960px){ .hero-grid{grid-template-columns:1.05fr .95fr; gap:64px} }
+  .trust{display:flex; gap:26px; flex-wrap:wrap; margin-top:32px; padding-top:26px; border-top:1px solid var(--line)}
+  .trust div{font-size:13.5px; color:var(--muted)}
+  .trust b{display:block; font-size:21px; color:var(--ink); font-weight:800; letter-spacing:-.4px}
+
+  /* ── Телефон в hero ── */
+  .phone{width:300px; max-width:100%; margin:0 auto; background:#0f172a; border-radius:38px; padding:11px;
+         box-shadow:0 30px 70px -20px rgba(15,23,42,.45)}
+  .screen{background:var(--soft); border-radius:28px; padding:18px 15px; min-height:470px}
+  .s-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px}
+  .s-title{font-weight:800; font-size:17px}
+  .chip{background:var(--accent-soft); color:var(--accent); font-size:11px; font-weight:700;
+        padding:4px 9px; border-radius:999px}
+  .chip.ok{background:var(--ok-soft); color:var(--ok)}
+  .job{background:#fff; border-radius:14px; padding:14px; margin-bottom:11px; box-shadow:0 1px 3px rgba(15,23,42,.06)}
+  .price{font-size:27px; font-weight:900; letter-spacing:-.8px}
+  .job .m{color:var(--muted); font-size:12.5px}
+  .job .n{font-weight:700; font-size:14.5px; margin-top:8px}
+  .fake-btn{background:var(--accent); color:#fff; text-align:center; border-radius:999px;
+            padding:10px; font-size:13.5px; font-weight:700; margin-top:11px}
+
+  /* ── Карточки ── */
+  .cards{display:grid; gap:20px; grid-template-columns:1fr}
+  @media (min-width:760px){ .cards{grid-template-columns:repeat(3,1fr)} }
+  .card{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:26px}
+  .soft .card{background:#fff}
   .card p{color:var(--muted); font-size:14.5px; margin:0}
+  .ico{width:42px; height:42px; border-radius:12px; background:var(--accent-soft); color:var(--accent);
+       display:flex; align-items:center; justify-content:center; font-size:19px; margin-bottom:14px}
+  .ico.g{background:var(--ok-soft); color:var(--ok)}
 
-  .steps{counter-reset:s; margin:0; padding:0; list-style:none}
-  .steps li{counter-increment:s; position:relative; padding:12px 0 12px 46px; border-top:1px solid var(--line)}
-  .steps li:first-child{border-top:0}
-  .steps li:before{content:counter(s); position:absolute; left:0; top:12px;
-    width:29px; height:29px; border-radius:50%; background:var(--accent); color:#fff;
-    font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center}
-  .steps b{display:block}
-  .steps span{color:var(--muted); font-size:14.5px}
+  /* ── Шаги ── */
+  .steps{display:grid; gap:18px; grid-template-columns:1fr; counter-reset:s}
+  @media (min-width:760px){ .steps{grid-template-columns:repeat(5,1fr)} }
+  .step{counter-increment:s; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:22px}
+  .step:before{content:counter(s); display:flex; align-items:center; justify-content:center;
+    width:32px; height:32px; border-radius:50%; background:var(--accent); color:#fff;
+    font-weight:800; font-size:14.5px; margin-bottom:13px}
+  .step b{display:block; font-size:15px; margin-bottom:5px}
+  .step span{color:var(--muted); font-size:13.5px}
 
-  .honest{background:var(--ok-soft); border:1px solid #bfe6d5; border-radius:14px; padding:20px}
-  .honest h2{font-size:20px}
-  .honest p{color:#186; color:var(--ink); font-size:15px; margin-bottom:0}
+  /* ── Тёмный блок ── */
+  .dark-sec{background:var(--dark); color:#fff}
+  .dark-sec h2{color:#fff}
+  .dark-sec .sub{color:#94a3b8}
+  .dark-card{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+             border-radius:var(--radius); padding:28px}
+  .dark-card p{color:#cbd5e1; margin:0; font-size:15.5px}
+  .dark-card b{color:#fff}
 
-  .me{display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap}
-  .ava{width:54px; height:54px; border-radius:50%; background:var(--accent);
-       color:#fff; font-size:22px; font-weight:800; display:flex; align-items:center; justify-content:center; flex:none}
-  footer{padding:26px 0 40px; color:var(--muted); font-size:13px}
+  /* ── Автор ── */
+  .me{display:grid; gap:28px; grid-template-columns:1fr; align-items:center}
+  @media (min-width:760px){ .me{grid-template-columns:auto 1fr} }
+  .ava{width:88px; height:88px; border-radius:50%; background:linear-gradient(140deg,var(--accent),#60a5fa);
+       color:#fff; font-size:34px; font-weight:800; display:flex; align-items:center; justify-content:center}
+
+  footer{background:var(--soft); border-top:1px solid var(--line); padding:32px 0; color:var(--muted); font-size:13.5px}
+  .f-row{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<header>
+  <div class="wrap nav">
+    <div class="logo"><i></i> Уборка между гостями</div>
+    <nav class="nav-links">
+      <a href="#hosts">Собственникам</a>
+      <a href="#cleaners">Горничным</a>
+      <a href="#how">Как работает</a>
+      <a href="demo.html">Демо</a>
+    </nav>
+    <a class="btn p sm" href="#contact">Написать</a>
+  </div>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <span class="kicker">Калининград · запускаемся сейчас</span>
-    <h1>Уборка между гостями, которая не требует вашего участия</h1>
-    <p class="lead">Гость выехал — задача сама ушла проверенной горничной. Она убрала,
-      прислала фото-отчёт, получила деньги. Вы в это время можете быть в другом городе.</p>
-    <div class="btns">
-      <a class="btn p" href="#hosts">Я сдаю квартиру</a>
-      <a class="btn o" href="#cleaners">Я горничная</a>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Калининград · запускаемся сейчас</span>
+      <h1>Уборка между гостями, которая не требует вашего участия</h1>
+      <p class="lead">Гость выехал — задача сама ушла проверенной горничной.
+        Она убрала, прислала фото-отчёт, получила деньги. Вы в это время можете быть в другом городе.</p>
+      <div class="btns">
+        <a class="btn p" href="#hosts">Я сдаю квартиру</a>
+        <a class="btn o" href="#cleaners">Я горничная</a>
+      </div>
+      <div class="trust">
+        <div><b>0 ₽</b>комиссии с горничной</div>
+        <div><b>24 ч</b>и уборка принимается сама</div>
+        <div><b>15–25 %</b>берёт управляющая компания</div>
+      </div>
     </div>
-  </section>
 
-  <!-- СОБСТВЕННИКАМ -->
-  <section id="hosts">
-    <h2>Собственнику</h2>
-    <p class="sub">Управляющая компания берёт 15–25 % дохода за то, что вы можете
-      контролировать сами — если под рукой есть горничная и понятный процесс.</p>
+    <div class="phone">
+      <div class="screen">
+        <div class="s-top"><span class="s-title">Заказы рядом</span><span class="chip">Калининград</span></div>
+        <div class="job">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px">
+            <div><div class="price">1 800 ₽</div><div class="m">ваша ставка</div></div>
+            <span class="chip ok">✓ оплата<br>гарантирована</span>
+          </div>
+          <div class="n">Студия в Рыбной деревне</div>
+          <div class="m">Центральный · завтра, 12:00</div>
+          <div class="fake-btn">Откликнуться</div>
+        </div>
+        <div class="job">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start">
+            <div><div class="price">1 600 ₽</div><div class="m">2-комнатная</div></div>
+            <span class="chip ok">✓ гарантия</span>
+          </div>
+          <div class="m" style="margin-top:8px">Ленинградский · суббота, 11:00</div>
+        </div>
+        <p class="m" style="margin:12px 2px 0">Адрес и сумма видны до того, как вы согласились.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- СОБСТВЕННИКАМ -->
+<section class="soft" id="hosts">
+  <div class="wrap">
+    <div class="center">
+      <h2>Собственнику</h2>
+      <p class="sub">Управляющая компания берёт 15–25 % дохода за то, что вы можете
+        контролировать сами — если под рукой есть горничная и понятный процесс.</p>
+    </div>
     <div class="cards">
       <div class="card">
+        <div class="ico">🔍</div>
         <h3>Не искать исполнителя</h3>
         <p>Горничные вашего города видят заказ и откликаются сами. Вы выбираете по цене и отзывам.</p>
       </div>
       <div class="card">
+        <div class="ico">📷</div>
         <h3>Видеть результат</h3>
         <p>Фото по ключевым пунктам чек-листа приходят до заезда гостя. Плюс отчёт о поломках и расходниках.</p>
       </div>
       <div class="card">
+        <div class="ico">📅</div>
         <h3>Не держать в голове</h3>
         <p>Уборка создаётся из календаря броней — за выездами следить не нужно.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ГОРНИЧНЫМ -->
-  <section id="cleaners">
-    <h2>Горничной</h2>
-    <p class="sub">Заказы на посуточных квартирах: короткие, рядом с домом, с понятными
-      требованиями. Без комиссии сервиса.</p>
+<!-- ГОРНИЧНЫМ -->
+<section id="cleaners">
+  <div class="wrap">
+    <div class="center">
+      <h2>Горничной</h2>
+      <p class="sub">Заказы на посуточных квартирах: короткие, рядом с домом,
+        с понятными требованиями. Без комиссии сервиса.</p>
+    </div>
     <div class="cards">
       <div class="card">
+        <div class="ico g">₽</div>
         <h3>Цену называете вы</h3>
         <p>Не заказчик диктует ставку, а вы предлагаете свою. Он выбирает.</p>
       </div>
       <div class="card">
+        <div class="ico g">🔒</div>
         <h3>Деньги под защитой</h3>
         <p>Оплата замораживается до начала работы. Молчание заказчика дольше суток — уборка принимается сама.</p>
       </div>
       <div class="card">
+        <div class="ico g">🕒</div>
         <h3>Свободный график</h3>
         <p>Берёте только удобные заказы. Никаких смен, штрафов и обязательного минимума.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- КАК УСТРОЕНО -->
-  <section>
-    <h2>Как проходит одна уборка</h2>
-    <p class="sub">От выезда гостя до готовой квартиры.</p>
-    <ol class="steps">
-      <li><b>Гость выезжает</b><span>Система знает время выезда из календаря броней и создаёт задачу.</span></li>
-      <li><b>Горничные откликаются</b><span>Видят адрес, время и сумму заранее. Каждая называет свою цену.</span></li>
-      <li><b>Собственник выбирает</b><span>По связке «цена и репутация». Деньги сразу замораживаются.</span></li>
-      <li><b>Уборка по чек-листу</b><span>Ключевые пункты подтверждаются фото — защита обеих сторон.</span></li>
-      <li><b>Приёмка и оплата</b><span>Собственник принимает работу, деньги уходят горничной в тот же день.</span></li>
-    </ol>
-    <div class="btns" style="margin-top:22px">
+<!-- КАК РАБОТАЕТ -->
+<section class="soft" id="how">
+  <div class="wrap">
+    <div class="center">
+      <h2>Как проходит одна уборка</h2>
+      <p class="sub">От выезда гостя до готовой квартиры — без единого звонка с вашей стороны.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><b>Гость выезжает</b><span>Время выезда берётся из календаря броней, задача создаётся сама.</span></div>
+      <div class="step"><b>Горничные откликаются</b><span>Видят адрес, время и сумму заранее. Каждая называет свою цену.</span></div>
+      <div class="step"><b>Вы выбираете</b><span>По связке «цена и репутация». Деньги сразу замораживаются.</span></div>
+      <div class="step"><b>Уборка по чек-листу</b><span>Ключевые пункты подтверждаются фото — защита обеих сторон.</span></div>
+      <div class="step"><b>Приёмка и оплата</b><span>Вы принимаете работу, деньги уходят горничной в тот же день.</span></div>
+    </div>
+    <div class="center" style="margin-top:38px">
       <a class="btn p" href="demo.html">Посмотреть, как это выглядит в телефоне</a>
+      <p style="color:var(--muted); font-size:13.5px; margin-top:14px">
+        Кликабельная демонстрация на выдуманных данных. Регистрация не нужна.</p>
     </div>
-    <p style="color:var(--muted); font-size:13.5px; margin-top:12px">
-      Откроется кликабельная демонстрация на выдуманных данных. Регистрация не нужна.</p>
-  </section>
+  </div>
+</section>
 
-  <!-- ЧЕСТНО -->
-  <section>
-    <div class="honest">
+<!-- ЧЕСТНО + КОНТАКТ -->
+<section class="dark-sec" id="contact">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:38px">
       <h2>Честно о стадии</h2>
-      <p>Сервис запускается в Калининграде прямо сейчас, и я набираю первых горничных
-      и первых собственников. Потока заказов пока нет — обещать его я не буду.
-      Зато первым достаётся приоритет, а уборки я организую лично и слежу за каждой.</p>
+      <p class="sub">Сервис запускается в Калининграде прямо сейчас — и это важно знать до того,
+        как вы решите попробовать.</p>
     </div>
-  </section>
+    <div class="cards" style="margin-bottom:44px">
+      <div class="dark-card"><p><b>Потока заказов пока нет.</b> Я набираю первых горничных
+        и первых собственников, обещать занятость не буду.</p></div>
+      <div class="dark-card"><p><b>Первым — приоритет.</b> Кто зашёл в начале, тот получает
+        заказы раньше остальных, когда поток появится.</p></div>
+      <div class="dark-card"><p><b>Каждую уборку веду лично.</b> Пока клиентов мало, я сам
+        свожу стороны и слежу, чтобы всё прошло как надо.</p></div>
+    </div>
 
-  <!-- КТО -->
-  <section>
-    <h2>Кто за этим стоит</h2>
     <div class="me">
       <div class="ava">Д</div>
-      <div style="flex:1; min-width:260px">
-        <h3>Денис, Калининград</h3>
-        <p style="color:var(--muted); margin-bottom:14px">Делаю этот сервис сам. Если вы сдаёте
-          квартиру посуточно или убираете такие квартиры — напишите, мне важно понять,
-          насколько это нужно и что здесь стоит изменить.</p>
+      <div>
+        <h3 style="color:#fff; font-size:22px">Денис, Калининград</h3>
+        <p style="color:#cbd5e1; margin:0 0 20px; max-width:620px">Делаю этот сервис сам.
+          Если вы сдаёте квартиру посуточно или убираете такие квартиры — напишите.
+          Мне важно понять, насколько это нужно и что здесь стоит изменить.</p>
         <div class="btns">
-          <a class="btn g" href="https://t.me/ВАШ_ТЕЛЕГРАМ">Написать в Telegram</a>
-          <a class="btn o" href="tel:+7XXXXXXXXXX">Позвонить</a>
+          <a class="btn w" href="https://t.me/ВАШ_ТЕЛЕГРАМ">Написать в Telegram</a>
+          <a class="btn o" style="background:transparent; color:#fff; border-color:rgba(255,255,255,.3)" href="tel:+7XXXXXXXXXX">Позвонить</a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer>
-    Демонстрация концепта. Данные в демо выдуманы, персональные данные не собираются.
-  </footer>
+<footer>
+  <div class="wrap f-row">
+    <span>Уборка между гостями · Калининград</span>
+    <span>Демонстрация концепта. Данные в демо выдуманы, персональные данные не собираются.</span>
+  </div>
+</footer>
 
-</div>
 </body>
 </html>
